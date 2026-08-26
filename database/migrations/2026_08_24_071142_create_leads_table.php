@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('email', 100)->unique();
             $table->string('phone', 20);
+            $table->string('referral_code', 10);
             $table->string('city', 100);
             $table->string('package', 100);
             $table->string('duration', 100);
