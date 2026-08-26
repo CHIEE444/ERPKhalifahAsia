@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('village', 100);
             $table->string('address', 255);
             $table->string('phone', 20);
+            $table->string('referral_code', 10)->unique();
             $table->rememberToken();
             $table->timestamps();
         });
