@@ -14,6 +14,24 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('name', 100);
+            $table->string('email', 100)->unique();
+            $table->string('phone', 100);
+            $table->string('city', 100);
+            $table->string('package', 100);
+            $table->string('duration', 100);
+            $table->date('date');
+            $table->string('room_type', 100);
+            $table->string('note', 250)->nullable();
+            $table->enum('status', [
+                'active',
+                'in_progress',
+                'completed',
+                'cancelled'
+            ])->default('active');
+            $table->foreign('referral_code')->references('referral_code')->on('users')->onDelete('set null');
+ 
+
         });
     }
 
