@@ -17,6 +17,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('provinsi');
+            $table->string('kab/kota');
+            $table->string('kecamatan');
+            $table->string('desa/kelurahan');
+            $table->string('alamat');
+            $table->integer('no_telepon');
+            $table->integer('no_whatsapp');
             $table->rememberToken();
             $table->timestamps();
         });
