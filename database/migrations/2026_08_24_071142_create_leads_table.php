@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('room_type', 100);
             $table->string('notes', 255)->nullable();
             $table->enum('status', ['new', 'contacted', 'confirmed', 'cancelled'])->default('new');
+            $table->foreign('referral_code')->references('referral_code')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }
