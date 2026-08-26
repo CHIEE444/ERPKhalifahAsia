@@ -13,17 +13,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('name', 100);
+            $table->string('email', 100)->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('provinsi');
-            $table->string('kab/kota');
-            $table->string('kecamatan');
-            $table->string('desa/kelurahan');
-            $table->string('alamat');
-            $table->integer('no_telepon');
-            $table->integer('no_whatsapp');
+            $table->string('password', 16);
+            $table->string('province', 100);
+            $table->string('regency', 100);
+            $table->string('district', 100);
+            $table->string('village', 100);
+            $table->string('address', 255);
+            $table->string('phone', 20);
             $table->rememberToken();
             $table->timestamps();
         });
