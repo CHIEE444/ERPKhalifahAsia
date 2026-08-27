@@ -16,6 +16,29 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'province',
+        'regency',
+        'district',
+        'village',
+        'address',
+        'phone',
+        'referral_code',
+        'role',
+    ];
+
+    public function clients()
+    {
+        return $this->hasMany(Client::class, 'referral_code', 'referral_code');
+    }
+
+    public function leads()
+    {
+        return $this->hasMany(Lead::class, 'referral_code', 'referral_code');
+    }
 
     /**
      * Get the attributes that should be cast.
