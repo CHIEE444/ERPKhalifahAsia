@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 100);
+            $table->string('email', 100)->unique();
+            $table->string('phone', 20);
+            $table->string('referral_code', 10);
+            $table->string('city', 100);
+            $table->string('package', 100);
+            $table->string('duration', 100);
+            $table->date('date');
+            $table->string('room_type', 100);
+            $table->string('notes', 255)->nullable();
+            $table->enum('status', ['new', 'contacted', 'confirmed', 'cancelled'])->default('new');
+            $table->foreign('referral_code')->references('referral_code')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }
