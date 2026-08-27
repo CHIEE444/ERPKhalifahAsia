@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('address', 255);
             $table->string('phone', 20);
             $table->string('referral_code', 10)->unique();
+            $table->enum('role', ['user', 'admin'])->default('user');
             $table->rememberToken();
             $table->timestamps();
         });
