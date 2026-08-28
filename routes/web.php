@@ -26,5 +26,7 @@ Route::middleware(['auth'])->group(function () {
     });
   
    Route::resource('clients', ClientController::class);
+  
+Route::resource('leads', LeadController::class);
 });
 
