@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\ClientController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\LeadController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
