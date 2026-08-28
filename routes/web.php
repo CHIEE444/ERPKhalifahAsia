@@ -7,7 +7,7 @@ use App\Http\Controllers\LeadController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('login');
+    return view('test');
 });
 
 Route::post('/login',[AuthController::class, 'login'])->name('login');
