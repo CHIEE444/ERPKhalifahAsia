@@ -30,7 +30,8 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // Validate the request data
+        try{
+            // Validate the request data
         $validatedData = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -51,5 +52,8 @@ class AuthController extends Controller
         auth()->login($user);
 
         return redirect()->route('dashboard'); // Redirect to the dashboard or any other page
+        }catch (\Throwable $e) {
+    dd($e->getMessage());
+}
     }
 }
