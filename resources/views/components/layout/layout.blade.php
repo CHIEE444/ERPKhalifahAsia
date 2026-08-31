@@ -1,5 +1,6 @@
 @props([
-    'title' => 'Khalifah Asia'
+    'title' => 'Khalifah Asia',
+    'type' => 'default'
 ])
 
 <!DOCTYPE html>
@@ -10,8 +11,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>{{ $title }}</title>
 </head>
-<body>
-    <main>
+<body class="flex min-h-screen font-sans">
+    @if($type === 'default')
+    <nav class="bg-[#F6F3F2] border-r-1 border-[#E4BDC2] text-white w-72 p-4 h-screen fixed">
+        <x-layout.sidebar />
+    </nav>
+    @endif
+    <main class="flex-grow {{ $type == 'default' ? 'ml-72' : ''}}">
         {{ $slot }}
     </main>
 </body>

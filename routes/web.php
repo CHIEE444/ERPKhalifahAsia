@@ -3,31 +3,30 @@
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LeadController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('test');
-});
+Route::get('/', [DashboardController::class, 'admin'])->name('dashboard.admin');
 
-Route::post('/login',[AuthController::class, 'login'])->name('login');
-Route::post('/register',[AuthController::class, 'register'])->name('register');
+// Route::post('/login',[AuthController::class, 'login'])->name('login');
+// Route::post('/register',[AuthController::class, 'register'])->name('register');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
 
-    Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/users', [UserController::class, 'index'])->name('users.index');
-        Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-        Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-        Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
-        Route::delete('/users/{id}', [UserController::class, 'delete'])->name('users.delete');
-    });
+//     Route::prefix('admin')->name('admin.')->group(function () {
+//         Route::get('/users', [UserController::class, 'index'])->name('users.index');
+//         Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+//         Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+//         Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+//         Route::delete('/users/{id}', [UserController::class, 'delete'])->name('users.delete');
+//     });
   
-   Route::resource('clients', ClientController::class);
+//    Route::resource('clients', ClientController::class);
   
-Route::resource('leads', LeadController::class);
-});
+// Route::resource('leads', LeadController::class);
+// });
 
