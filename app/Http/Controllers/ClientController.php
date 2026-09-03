@@ -37,7 +37,7 @@ class ClientController extends Controller
             'name' => 'required|string|max:100',
             'email' => 'required|email|max:100|unique:clients,email',
             'phone' => 'required|string|max:100',
-            'referral_code' => 'required|string|max:10|exists:users,referral_code',
+            'referral_code' => 'nullable|string|max:10|exists:users,referral_code',
             'city' => 'required|string|max:100',
             'package' => 'required|string|max:100',
             'duration' => 'required|string|max:100',
