@@ -94,11 +94,12 @@ class ClientController extends Controller
             'note' => 'nullable|string|max:250',
             'status' => 'sometimes|in:active,in_progress,completed,cancelled',
         ]);
-    $client->update($validated);
-        return response()->json([
-            'success' => true,
-            'data' => $client
-        ]);
+        try{
+            $client->update($validated);
+            return back()->with('success', 'Client updated successfully.');
+        }catch(\Exception $e){
+            return back()->with('error', 'Failed to update client');    
+        }
     }
 
     public function updateStatus(Request $request, Client $client)
