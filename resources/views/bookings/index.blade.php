@@ -3,7 +3,16 @@
 
 
         <main class="flex-1 px-4 sm:px-6 lg:px-8 pt-20 pb-6 lg:pt-8 lg:pb-8 w-full min-w-0">
-
+            @if (session('success'))
+            <div class="rounded-lg bg-green-100 px-4 py-3 text-green-700">
+                {{ session('success') }}
+            </div>
+            @endif
+            @if (session('error'))
+            <div class="rounded-lg bg-red-100 px-4 py-3 text-red-700">
+                {{ session('error') }}
+            </div>
+            @endif
             {{-- Header --}}
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                 <div>
@@ -63,64 +72,72 @@
                         </thead>
                         <tbody class="divide-y divide-gray-100">
                             @php
-                                $statusColor = [
-                                    'completed' => 'bg-green-50 text-green-600',
-                                    'in_progress' => 'bg-amber-50 text-amber-600',
-                                    'cancelled' => 'bg-gray-100 text-gray-500',
-                                    'active' => 'bg-blue-50 text-blue-600',
-                                ];
+                            $statusColor = [
+                            'completed' => 'bg-green-50 text-green-600',
+                            'in_progress' => 'bg-amber-50 text-amber-600',
+                            'cancelled' => 'bg-gray-100 text-gray-500',
+                            'active' => 'bg-blue-50 text-blue-600',
+                            ];
                             @endphp
 
                             @foreach ($clients as $client)
-                                <tr class="hover:bg-gray-50/60 booking-item" data-status="{{ $client->status }}"
-                                    data-search="{{ $client->status }} #{{ $client->id }} {{ $client->name }} {{ $client->package }} {{ $client->date }} ">
-                                    <td class="px-6 py-4 text-rose-700 font-medium">#{{ $client->id }}</td>
-                                    <td class="px-6 py-4 text-gray-800 font-medium">{{ $client->name }}</td>
-                                    <td class="px-6 py-4 text-gray-500">{{ $client->package }}</td>
-                                    <td class="px-6 py-4 text-gray-500">{{ $client->date }}</td>
-                                    <td class="px-6 py-4">
-                                        <form action="{{ route('clients.updateStatus', $client->id) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
+                            <tr class="hover:bg-gray-50/60 booking-item" data-status="{{ $client->status }}"
+                                data-search="{{ $client->status }} #{{ $client->id }} {{ $client->name }} {{ $client->package }} {{ $client->date }} ">
+                                <td class="px-6 py-4 text-rose-700 font-medium">#{{ $client->id }}</td>
+                                <td class="px-6 py-4 text-gray-800 font-medium">{{ $client->name }}</td>
+                                <td class="px-6 py-4 text-gray-500">{{ $client->package }}</td>
+                                <td class="px-6 py-4 text-gray-500">{{ $client->date }}</td>
+                                <td class="px-6 py-4">
+                                    <form action="{{ route('clients.updateStatus', $client->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
 
-                                            <select name="status" onchange="this.form.submit()"
-                                                class="px-3 py-1 rounded-full text-xs font-medium border-0 cursor-pointer {{ $statusColor[$client->status] }}">
-                                                <option value="in_progress" @selected($client->status === 'in_progress')>
-                                                    In Progress
-                                                </option>
-                                                <option value="active" @selected($client->status === 'active')>
-                                                    Active
-                                                </option>
+                                        <select name="status" onchange="this.form.submit()"
+                                            class="px-3 py-1 rounded-full text-xs font-medium border-0 cursor-pointer {{ $statusColor[$client->status] }}">
+                                            <option value="in_progress" @selected($client->status === 'in_progress')>
+                                                In Progress
+                                            </option>
+                                            <option value="active" @selected($client->status === 'active')>
+                                                Active
+                                            </option>
 
-                                                <option value="completed" @selected($client->status === 'completed')>
-                                                    Completed
-                                                </option>
+                                            <option value="completed" @selected($client->status === 'completed')>
+                                                Completed
+                                            </option>
 
-                                                <option value="cancelled" @selected($client->status === 'cancelled')>
-                                                    Cancelled
-                                                </option>
-                                            </select>
-                                        </form>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center justify-center text-gray-400">
-                                            <button type="button" data-modal-open="booking-detail-{{ $client->id }}"
-                                                class="hover:text-gray-700">
-                                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                                                    stroke="currentColor" stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12Z" />
-                                                    <circle cx="12" cy="12" r="3" />
-                                                </svg>
-                                            </button>
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                <x-booking-modal id="booking-detail-{{ $client['id'] }}" :bookingId="$client['id']"
-                                    :namaJamaah="$client['name']" :email="$client['email']" :phone="$client['phone']" :city="$client['city']"
-                                    :package="$client['package']" :roomType="$client['room_type']" :duration="$client['duration']" :date="$client['date']"
-                                    :note="$client['note']" />
+                                            <option value="cancelled" @selected($client->status === 'cancelled')>
+                                                Cancelled
+                                            </option>
+                                        </select>
+                                    </form>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-center text-gray-400">
+                                        <button type="button" data-modal-open="booking-detail-{{ $client->id }}"
+                                            class="hover:text-gray-700">
+                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12Z" />
+                                                <circle cx="12" cy="12" r="3" />
+                                            </svg>
+                                        </button>
+                                        <button type="button" data-modal-open="booking-edit-{{ $client->id }}"
+                                            class="ml-3 hover:text-gray-700">
+                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                    </div>
+                                </td>
+                            </tr>
+                            <x-booking-modal id="booking-detail-{{ $client['id'] }}" :bookingId="$client['id']"
+                                :namaJamaah="$client['name']" :email="$client['email']" :phone="$client['phone']" :city="$client['city']"
+                                :package="$client['package']" :roomType="$client['room_type']" :duration="$client['duration']" :date="$client['date']"
+                                :note="$client['note']" />
+                            <x-bookingedit-modal id="booking-edit-{{ $client['id'] }}" :bookingId="$client['id']"
+                                :namaJamaah="$client['name']" :package="$client['package']" :duration="$client['duration']" :date="$client['date']" :roomType="$client['room_type']" :note="$client['note']" />
                             @endforeach
 
 
