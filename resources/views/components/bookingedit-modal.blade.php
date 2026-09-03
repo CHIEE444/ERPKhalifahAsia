@@ -1,12 +1,12 @@
 @props([
-    'id' => 'bookingedit-modal',
-    'bookingId',
-    'namaJamaah',
-    'package',
-    'duration',
-    'date',
-    'roomType',
-    'note',
+'id' => 'bookingedit-modal',
+'bookingId',
+'namaJamaah',
+'package',
+'duration',
+'date',
+'roomType',
+'note',
 ])
 
 <div id="{{ $id }}"
@@ -27,21 +27,18 @@
             <button
                 type="button"
                 data-modal-close="{{ $id }}"
-                class="flex h-8 w-8 items-center justify-center text-[#91A0B8] transition hover:text-gray-600"
-            >
+                class="flex h-8 w-8 items-center justify-center text-[#91A0B8] transition hover:text-gray-600">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="h-5 w-5"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    stroke-width="2"
-                >
+                    stroke-width="2">
                     <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        d="M6 18L18 6M6 6l12 12"
-                    />
+                        d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
 
@@ -70,8 +67,7 @@
                             type="text"
                             value="#{{ $bookingId }}"
                             disabled
-                            class="h-9.5 w-full rounded-xl border border-[#DDE4EE] bg-[#F8FAFC] px-4 text-[13px] font-medium text-[#F72563] outline-none"
-                        >
+                            class="h-9.5 w-full rounded-xl border border-[#DDE4EE] bg-[#F8FAFC] px-4 text-[13px] font-medium text-[#F72563] outline-none">
                     </div>
 
 
@@ -86,8 +82,7 @@
                             name="namaJamaah"
                             value="{{ $namaJamaah }}"
                             required
-                            class="h-9.5 w-full rounded-xl border border-[#DDE4EE] bg-white px-4 text-[13px] text-[#26344D] outline-none transition focus:border-[#F72563] focus:ring-2 focus:ring-[#F72563]/10"
-                        >
+                            class="h-9.5 w-full rounded-xl border border-[#DDE4EE] bg-white px-4 text-[13px] text-[#26344D] outline-none transition focus:border-[#F72563] focus:ring-2 focus:ring-[#F72563]/10">
                     </div>
 
 
@@ -102,8 +97,7 @@
                             name="package"
                             value="{{ $package }}"
                             required
-                            class="h-9.5 w-full rounded-xl border border-[#DDE4EE] bg-white px-4 text-[13px] text-[#26344D] outline-none transition focus:border-[#F72563] focus:ring-2 focus:ring-[#F72563]/10"
-                        >
+                            class="h-9.5 w-full rounded-xl border border-[#DDE4EE] bg-white px-4 text-[13px] text-[#26344D] outline-none transition focus:border-[#F72563] focus:ring-2 focus:ring-[#F72563]/10">
                     </div>
 
 
@@ -119,12 +113,13 @@
                             <select
                                 name="duration"
                                 required
-                                class="h-9.5 w-full appearance-none rounded-xl border border-[#DDE4EE] bg-white px-4 pr-10 text-[13px] text-[#26344D] outline-none transition focus:border-[#F72563] focus:ring-2 focus:ring-[#F72563]/10"
-                            >
+                                class="h-9.5 w-full appearance-none rounded-xl border border-[#DDE4EE] bg-white px-4 pr-10 text-[13px] text-[#26344D] outline-none transition focus:border-[#F72563] focus:ring-2 focus:ring-[#F72563]/10">
                                 <option value="">Select Duration</option>
+
                                 <option value="9 hari" {{ $duration == '9 hari' ? 'selected' : '' }}>
                                     9 hari
                                 </option>
+
                                 <option value="12 hari" {{ $duration == '12 hari' ? 'selected' : '' }}>
                                     12 hari
                                 </option>
@@ -137,13 +132,11 @@
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
-                                    stroke-width="2"
-                                >
+                                    stroke-width="2">
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                        d="M19 9l-7 7-7-7"
-                                    />
+                                        d="M19 9l-7 7-7-7" />
                                 </svg>
                             </div>
                         </div>
@@ -161,8 +154,7 @@
                             name="date"
                             value="{{ $date }}"
                             required
-                            class="h-9.5 w-full rounded-xl border border-[#DDE4EE] bg-white px-4 text-[13px] text-[#26344D] outline-none transition focus:border-[#F72563] focus:ring-2 focus:ring-[#F72563]/10"
-                        >
+                            class="h-9.5 w-full rounded-xl border border-[#DDE4EE] bg-white px-4 text-[13px] text-[#26344D] outline-none transition focus:border-[#F72563] focus:ring-2 focus:ring-[#F72563]/10">
                     </div>
 
 
@@ -174,17 +166,19 @@
 
                         <div class="relative">
                             <select
-                                name="room_type"
+                                name="roomType"
                                 required
-                                class="h-9.5 w-full appearance-none rounded-xl border border-[#DDE4EE] bg-white px-4 pr-10 text-[13px] text-[#26344D] outline-none transition focus:border-[#F72563] focus:ring-2 focus:ring-[#F72563]/10"
-                            >
+                                class="h-9.5 w-full appearance-none rounded-xl border border-[#DDE4EE] bg-white px-4 pr-10 text-[13px] text-[#26344D] outline-none transition focus:border-[#F72563] focus:ring-2 focus:ring-[#F72563]/10">
                                 <option value="">Select Room Type</option>
+
                                 <option value="Quad" {{ $roomType == 'Quad' ? 'selected' : '' }}>
                                     Quad
                                 </option>
+
                                 <option value="Triple" {{ $roomType == 'Triple' ? 'selected' : '' }}>
                                     Triple
                                 </option>
+
                                 <option value="Double" {{ $roomType == 'Double' ? 'selected' : '' }}>
                                     Double
                                 </option>
@@ -197,13 +191,11 @@
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
-                                    stroke-width="2"
-                                >
+                                    stroke-width="2">
                                     <path
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                        d="M19 9l-7 7-7-7"
-                                    />
+                                        d="M19 9l-7 7-7-7" />
                                 </svg>
                             </div>
                         </div>
@@ -212,16 +204,15 @@
 
                     {{-- Note --}}
                     <div class="md:col-span-2">
-    <label class="mb-2 block text-[13px] font-medium text-[#26344D]">
-        Note
-    </label>
+                        <label class="mb-2 block text-[13px] font-medium text-[#26344D]">
+                            Note
+                        </label>
 
-    <textarea
-        name="note"
-        rows="3"
-        class="min-h-20 w-full resize-none rounded-xl border border-[#DDE4EE] bg-white px-4 py-2.5 text-[13px] text-[#26344D] outline-none transition focus:border-[#F72563] focus:ring-2 focus:ring-[#F72563]/10"
-    >{{ $note }}</textarea>
-</div>
+                        <textarea
+                            name="note"
+                            rows="3"
+                            class="min-h-20 w-full resize-none rounded-xl border border-[#DDE4EE] bg-white px-4 py-2.5 text-[13px] text-[#26344D] outline-none transition focus:border-[#F72563] focus:ring-2 focus:ring-[#F72563]/10">{{ $note }}</textarea>
+                    </div>
 
                 </div>
             </div>
@@ -233,15 +224,13 @@
                 <button
                     type="button"
                     data-modal-close="{{ $id }}"
-                    class="h-9.5 rounded-full border border-[#DDE4EE] bg-white px-6 text-[13px] font-medium text-[#526078] transition hover:bg-[#F8FAFC]"
-                >
+                    class="h-9.5 rounded-full border border-[#DDE4EE] bg-white px-6 text-[13px] font-medium text-[#526078] transition hover:bg-[#F8FAFC]">
                     Cancel
                 </button>
 
                 <button
                     type="submit"
-                    class="h-9.5 rounded-full bg-[#F72563] px-6 text-[13px] font-medium text-white shadow-sm transition hover:bg-[#E91E5B] hover:shadow-md"
-                >
+                    class="h-9.5 rounded-full bg-[#F72563] px-6 text-[13px] font-medium text-white shadow-sm transition hover:bg-[#E91E5B] hover:shadow-md">
                     Update Booking
                 </button>
 
@@ -250,4 +239,4 @@
         </form>
 
     </div>
-</div> 
+</div>
