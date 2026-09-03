@@ -187,9 +187,9 @@
 
         shareButton.addEventListener('click', async () => {
             const shareData = {
-                title: document.title,
+                title: 'Umroh & Travel - Khalifah Asia Bekassi - Langkah kecil menuju Baitullah,niat besar menuju ridha Allah.',
                 text: 'Lihat halaman ini',
-                url: window.location.href + '?' + shareButton.dataset.referralCode,
+                url: 'https://khalifahasia.hushantechnology.com?agent=' + shareButton.dataset.referralCode,
             };
 
             if (navigator.share) {
