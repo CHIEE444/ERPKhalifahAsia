@@ -28,7 +28,7 @@ class ClientFactory extends Factory
             'date' => fake()->date(),
             'room_type' => fake()->randomElement(['single', 'double', 'suite']),
             'note' => fake()->optional()->text(250),
-            'status' => fake()->randomElement(['active', 'in_progress', 'completed', 'cancelled']),
+            'status' => fake()->randomElement(['in_progress', 'completed', 'cancelled', 'active']),
         ];
     }
 }

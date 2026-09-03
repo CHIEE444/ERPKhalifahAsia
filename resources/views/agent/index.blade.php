@@ -1,45 +1,29 @@
 <x-layout title="Khalifah Asia">
 
     <div class="min-h-screen bg-slate-50 p-6 space-y-6">
-
-        {{-- Top row: Profile card + Progress card --}}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            {{-- Profile card --}}
-            <div class="bg-white border border-rose-100 rounded-2xl shadow-sm p-6 flex items-center gap-4">
-                <img src="{{ $admin['avatar'] ?? 'https://i.pravatar.cc/150?img=47' }}"
-                    alt="{{ $admin['name'] ?? 'Admin' }}" alt="Admin Avatar"
-                    class="w-16 h-16 rounded-full object-cover ring-2 ring-rose-500 ring-offset-2">
-                <div>
-                    <h2 class="text-xl font-bold text-slate-800 leading-tight">Dashboard<br>Admin</h2>
-                    <p class="text-sm text-slate-500 mt-1">ID: {{ $admin['id'] ?? 'KHA-2023-0042' }}</p>
-                    <span class="inline-flex items-center gap-1.5 mt-2 text-sm text-slate-600">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                        Active
-                    </span>
-                </div>
+        @if (session('success'))
+            <div class="rounded-lg bg-green-100 px-4 py-3 text-green-700">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="rounded-lg bg-red-100 px-4 py-3 text-red-700">
+                {{ session('error') }}
+            </div>
+        @endif
+        {{-- Header --}}
+        <div
+            class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 bg-white border border-slate-100 rounded-2xl shadow-sm p-6">
+            <div>
+                <h1 class="text-xl sm:text-2xl font-bold text-gray-900">Agents Management</h1>
+                <p class="text-sm text-gray-400 mt-1">Manage and track all agent information and activities.</p>
             </div>
 
-            {{-- Progress card --}}
-            <div class="bg-white border border-rose-100 rounded-2xl shadow-sm p-6">
-                <p class="text-sm text-slate-500">Progres Jamaah</p>
-                <p class="text-3xl font-bold text-slate-800 mt-1">
-                    {{ $progress['current'] ?? 90 }}
-                    <span class="text-base font-medium text-slate-400">/ {{ $progress['total'] ?? 100 }}</span>
-                </p>
-                <div class="mt-4 h-2.5 w-full bg-slate-200 rounded-full overflow-hidden">
-                    @php
-                        $current = $progress['current'] ?? 90;
-                        $total = $progress['total'] ?? 100;
-                        $percent = $total > 0 ? min(100, ($current / $total) * 100) : 0;
-                    @endphp
-                    <div class="h-full bg-rose-800 rounded-full" style="width: {{ $percent }}%"></div>
-                </div>
-            </div>
+
         </div>
 
         {{-- Agent Management --}}
-        <div class="bg-white border border-slate-100 rounded-2xl shadow-sm p-6">
+        <div class="bg-white border border-slate-100 rounded-2xl shadow-sm p-6 ">
 
             {{-- Header --}}
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
@@ -57,16 +41,7 @@
                             class="w-full sm:w-56 pl-9 pr-3 py-2.5 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-200 focus:border-rose-400">
                     </form>
 
-                    {{-- Add agent button --}}
-                    {{-- <a href="{{ route('agents.create') ?? '#' }}" --}}
-                    <a href=""
-                        class="inline-flex items-center gap-2 bg-rose-800 hover:bg-rose-900 text-white text-sm font-medium px-4 py-2.5 rounded-lg whitespace-nowrap transition-colors">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
-                        Tambah Agent
-                    </a>
+
                 </div>
             </div>
 
@@ -76,7 +51,7 @@
                     <thead>
                         <tr class="text-left text-slate-500 border-b border-slate-100">
                             <th class="font-medium py-3 pr-4">Nama Agent</th>
-                            <th class="font-medium py-3 pr-4">ID Agent</th>
+                            <th class="font-medium py-3 pr-4">Referral Code</th>
                             <th class="font-medium py-3 pr-4">Lokasi</th>
                             {{-- <th class="font-medium py-3 pr-4">Status</th> --}}
                             <th class="font-medium py-3 text-right">Aksi</th>
@@ -84,7 +59,7 @@
                     </thead>
                     <tbody>
                         @forelse ($agents as $agent)
-                            <tr data-search="{{ $agent->name }} {{ $agent->id }}"
+                            <tr data-search="{{ $agent->name }} {{ $agent->referral_code }}"
                                 class="agent-item border-b border-slate-50 last:border-0 hover:bg-slate-50/60 transition-colors">
                                 <td class="py-3 pr-4">
                                     <div class="flex items-center gap-3">
@@ -93,22 +68,13 @@
                                         <span class="font-medium text-slate-800">{{ $agent['name'] }}</span>
                                     </div>
                                 </td>
-                                <td class="py-3 pr-4 text-slate-600">{{ $agent['id'] }}</td>
+                                <td class="py-3 pr-4 text-slate-600">{{ $agent['referral_code'] }}</td>
                                 <td class="py-3 pr-4 text-slate-600">{{ $agent['province'] }}</td>
-                                {{-- <td class="py-3 pr-4">
-                                @if ($agent['status'] === 'Aktif')
-                                    <span class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-emerald-100 text-emerald-700">
-                                        Aktif
-                                    </span>
-                                @else
-                                    <span class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-500">
-                                        Tidak Aktif
-                                    </span>
-                                @endif
-                            </td> --}}
+
                                 <td class="py-3">
                                     <div class="flex items-center justify-end gap-3 text-slate-400">
-                                        <button type="button" title="Lihat" class="hover:text-slate-700">
+                                        <button type="button" data-modal-open="agent-detail-{{ $agent['id'] }}" title="Lihat"
+                                            class="hover:text-slate-700">
                                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor" stroke-width="1.8">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -117,14 +83,7 @@
                                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                             </svg>
                                         </button>
-                                        <button type="button" title="Edit" class="hover:text-slate-700">
-                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-                                                stroke="currentColor" stroke-width="1.8">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
-                                            </svg>
-                                        </button>
-                                        <form action="" method="POST" {{-- <form action="{{ route('agents.destroy', $agent['id']) ?? '#' }}" method="POST" --}}
+                                        <form action="{{ route('users.destroy', $agent['id']) }}" method="POST"
                                             onsubmit="return confirm('Hapus agent ini?');">
                                             @csrf
                                             @method('DELETE')
@@ -139,6 +98,18 @@
                                     </div>
                                 </td>
                             </tr>
+                            <x-agent-modal 
+                                id="agent-detail-{{ $agent['id'] }}" 
+                                :referralCode="$agent['referral_code']"
+                                :namaAgent="$agent['name']"
+                                :email="$agent['email']"
+                                :phone="$agent['phone']"
+                                :province="$agent['province']"
+                                :regency="$agent['regency']"
+                                :district="$agent['district']"
+                                :village="$agent['village']"
+                                :address="$agent['address']"
+                                />
                         @empty
                             <tr>
                                 <td colspan="5" class="py-6 text-center text-slate-400">Belum ada data agent.</td>
@@ -190,5 +161,6 @@
             });
         });
     </script>
+    @vite(['resources/js/modal.js'])
 
 </x-layout>

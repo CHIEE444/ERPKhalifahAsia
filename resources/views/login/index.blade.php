@@ -1,4 +1,4 @@
-<x-layout title="login">
+<x-layout title="Login" type="login">
 
     <div class="min-h-screen w-full flex flex-col lg:flex-row bg-white">
 
@@ -35,8 +35,8 @@
                     Silakan masuk ke akun mitra Anda untuk melanjutkan.
                 </p>
 
-                <form class="space-y-5 sm:space-y-6" onsubmit="return false;">
-
+                <form action="{{ route('login') }}" method="POST" class="space-y-5 sm:space-y-6">
+                    @csrf
                     <div>
                         <label for="login" class="block text-sm font-semibold text-[#1C1B1B] mb-2">
                             ID Agen / Email
@@ -50,10 +50,16 @@
                                         fill="#5B3F43" />
                                 </svg>
                             </span>
-                            <input id="login" type="text" name="login" placeholder="Masukkan ID atau Email"
+                            <input id="login" type="text" name="email" placeholder="Masukkan ID atau Email"
                                 required
                                 class="w-full rounded-xl border border-[#E5E5E5] pl-12 pr-4 py-3 text-base text-[#1C1B1B] placeholder:text-[#5B3F43] focus:outline-none focus:ring-2 focus:ring-[#B80049] focus:border-[#B80049] transition">
+                            
                         </div>
+                        @error('email')
+                                <p class="mt-1 text-xs text-red-500">
+                                    {{ $message }}
+                                </p>
+                            @enderror
                     </div>
 
                     <div>
@@ -75,14 +81,14 @@
                                         fill="#5B3F43" />
                                 </svg>
                             </span>
-                            <input id="password" type="password" name="password"
-                                placeholder="Masukkan kata sandi" required
+                            <input id="password" type="password" name="password" placeholder="Masukkan kata sandi"
+                                required
                                 class="w-full rounded-xl border border-[#E5E5E5] pl-12 pr-12 py-3 text-base text-[#1C1B1B] placeholder:text-[#5B3F43] focus:outline-none focus:ring-2 focus:ring-[#B80049] focus:border-[#B80049] transition">
                             <button type="button" onclick="togglePassword()"
                                 class="absolute inset-y-0 right-0 flex items-center pr-4 text-[#5B3F43] hover:text-[#3f2c2f]">
-                                <svg id="eyeOpen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
+                                <svg id="eyeOpen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"></path>
                                     <circle cx="12" cy="12" r="3"></circle>
                                 </svg>
@@ -98,14 +104,6 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center">
-                        <input id="remember" type="checkbox" name="remember"
-                            class="h-4 w-4 rounded border-[#E5E5E5] accent-[#B80049] focus:ring-[#B80049]">
-                        <label for="remember" class="ml-2 text-sm text-[#5B3F43]">
-                            Ingat saya di perangkat ini
-                        </label>
-                    </div>
-
                     <button type="submit"
                         class="w-full rounded-xl bg-[#B80049] hover:bg-[#96003c] text-white font-semibold py-3 text-base transition shadow-sm">
                         Masuk
@@ -114,8 +112,8 @@
 
                 <p class="mt-6 text-center text-sm text-[#5B3F43]">
                     Butuh bantuan akses?
-                    <a href="#" class="font-semibold text-[#B80049] hover:text-[#96003c]">
-                        Hubungi Dukungan Pusat
+                    <a href="/register" class="font-semibold text-[#B80049] hover:text-[#96003c]">
+                        Daftar Akun
                     </a>
                 </p>
             </div>

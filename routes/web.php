@@ -7,26 +7,35 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LeadController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [DashboardController::class, 'admin'])->name('dashboard.admin');
+Route::get('/', function () {
+    return auth()->check()
+        ? redirect()->route('dashboard')
+        : redirect()->route('login');
+});;
+Route::get('/register', function () {
+    return view('register.index');
+});
+Route::get('/login', function () {
+    return view('login.index');
+})->name('login');
 
-// Route::post('/login',[AuthController::class, 'login'])->name('login');
-// Route::post('/register',[AuthController::class, 'register'])->name('register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
 
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return view('dashboard');
-//     })->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/booking', [ClientController::class, 'index'])->name('booking.index');
+    Route::get('/setting', [UserController::class, 'edit'])->name('setting.edit');
+    Route::put('/users/update', [UserController::class, 'update'])->name('users.update');
+    Route::resource('clients', ClientController::class);
+    
+    
+});
 
-//     Route::prefix('admin')->name('admin.')->group(function () {
-//         Route::get('/users', [UserController::class, 'index'])->name('users.index');
-//         Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-//         Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-//         Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
-//         Route::delete('/users/{id}', [UserController::class, 'delete'])->name('users.delete');
-//     });
-  
-//    Route::resource('clients', ClientController::class);
-  
-// Route::resource('leads', LeadController::class);
-// });
-
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('users', UserController::class);
+    Route::put('/clients/{client}/status', [ClientController::class, 'updateStatus'])->name('clients.updateStatus');
+    Route::get('/agent', [UserController::class, 'index'])->name('agent');
+    Route::get('/create-admin', [UserController::class, 'create'])->name('create-admin');
+});

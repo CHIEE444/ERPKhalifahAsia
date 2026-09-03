@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('email', 100)->unique();
             $table->string('phone', 100);
-            $table->string('referral_code', 10);
+            $table->string('referral_code', 10)->nullable();
             $table->string('city', 100);
             $table->string('package', 100);
             $table->string('duration', 100);
@@ -25,10 +25,10 @@ return new class extends Migration
             $table->string('room_type', 100);
             $table->string('note', 250)->nullable();
             $table->enum('status', [
-                'active',
                 'in_progress',
                 'completed',
-                'cancelled'
+                'cancelled',
+                'active'
             ])->default('active');
             $table->foreign('referral_code')->references('referral_code')->on('users')->onDelete('set null');
  

@@ -1,21 +1,19 @@
-<x-layout title="register" type="register">
+<x-layout title="Create Admin">
     <div class="min-h-screen bg-white flex items-center justify-center px-4 py-10">
-        <div class="w-full max-w-md">
+        <div class="w-full max-w-[60vw] ">
             <div class="mb-5 flex justify-center">
                 <img src="{{ asset('images/khalifahlogo.png') }}" alt="Khalifah Asia Bekasi"
                     class="h-15 w-auto object-contain">
             </div>
 
             <div class="mb-6 text-center">
-                <h1 class="text-[30px] font-bold text-[#B80049]">Daftar Menjadi Agent</h1>
-                <p class="mt-1 text-[12px] leading-4 text-[#5B3F43]">
-                    Bergabunglah dengan jaringan agen premium kami dan<br>
-                    mulai kembangkan bisnis anda.
-                </p>
+                <h1 class="text-[30px] font-bold text-[#B80049]">Buat Akun Admin</h1>
+                <p class="text-sm text-gray-500">Silakan isi formulir di bawah ini untuk membuat akun admin baru.</p>
             </div>
 
-            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-                <form action="{{ route('register') }}" method="POST" class="space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 ">
+                <form action="{{ route('users.store') }}" method="POST"
+                    class="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-3">
                     @csrf
                     <div>
                         <label class="label" for="name">Nama Lengkap</label>
@@ -47,8 +45,8 @@
                                         d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
                             </span>
-                            <input required id="email" name="email" type="email" placeholder="nama@email.com" value="{{ old('email') }}"
-                                class="input">
+                            <input required id="email" name="email" type="email" placeholder="nama@email.com"
+                                value="{{ old('email') }}" class="input">
                         </div>
                         @error('email')
                             <p class="mt-1 text-xs text-red-500">
@@ -67,8 +65,8 @@
                                         d="M3 5a2 2 0 012-2h2.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a2 2 0 012 2v1a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                 </svg>
                             </span>
-                            <input required id="phone" name="phone" type="text" placeholder="081234567890" value="{{ old('phone') }}"
-                                class="input">
+                            <input required id="phone" name="phone" type="text" placeholder="081234567890"
+                                value="{{ old('phone') }}" class="input">
                         </div>
                         @error('phone')
                             <p class="mt-1 text-xs text-red-500">
@@ -98,8 +96,8 @@
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M9.88 9.88a3 3 0 104.24 4.24" />
                                 </svg>
-                                <svg id="eyeOpen" class="eye-open h-4 w-4 hidden" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" stroke-width="2">
+                                <svg id="eyeOpen" class="eye-open h-4 w-4 hidden" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -107,7 +105,7 @@
                                 </svg>
                             </button>
                         </div>
-                        
+
                     </div>
                     <div>
                         <label class="label" for="password">Konfirmasi Kata Sandi</label>
@@ -119,8 +117,8 @@
                                         d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                 </svg>
                             </span>
-                            <input required id="password_confirmation" name="password_confirmation" type="password" value="{{ old('password') }}"
-                                placeholder="Minimal 8 karakter" class="input pr-10">
+                            <input required id="password_confirmation" name="password_confirmation" type="password"
+                                value="{{ old('password') }}" placeholder="Minimal 8 karakter" class="input pr-10">
                             <button type="button" onclick="togglePassword(this)" data-target="password_confirmation"
                                 class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
                                 <svg id="eyeClosed" class="eye-closed h-4 w-4" fill="none" viewBox="0 0 24 24"
@@ -184,7 +182,8 @@
                                 </svg>
                             </span>
 
-                            <select id="province" name="province" class="input appearance-none" value="{{ old('province') }}" data-old="{{ old('province') }}">
+                            <select id="province" name="province" class="input appearance-none"
+                                value="{{ old('province') }}" data-old="{{ old('province') }}">
                                 <option value="">Pilih Provinsi</option>
                             </select>
                         </div>
@@ -209,7 +208,8 @@
                                 </svg>
                             </span>
 
-                            <select id="regency" name="regency" class="input appearance-none" value="{{ old('regency') }}" disabled data-old="{{ old('regency') }}">
+                            <select id="regency" name="regency" class="input appearance-none"
+                                value="{{ old('regency') }}" disabled data-old="{{ old('regency') }}">
                                 <option value="">Pilih Kabupaten / Kota</option>
                             </select>
                         </div>
@@ -234,7 +234,8 @@
                                 </svg>
                             </span>
 
-                            <select id="district" name="district" class="input appearance-none" disabled value="{{ old('district') }}" data-old="{{ old('district') }}">
+                            <select id="district" name="district" class="input appearance-none" disabled
+                                value="{{ old('district') }}" data-old="{{ old('district') }}">
                                 <option value="">Pilih Kecamatan</option>
                             </select>
                         </div>
@@ -259,7 +260,8 @@
                                 </svg>
                             </span>
 
-                            <select id="village" name="village" class="input appearance-none" disabled value="{{ old('village') }}" data-old="{{ old('village') }}">
+                            <select id="village" name="village" class="input appearance-none" disabled
+                                value="{{ old('village') }}" data-old="{{ old('village') }}">
                                 <option value="">Pilih Kelurahan / Desa</option>
                             </select>
                         </div>
@@ -269,18 +271,20 @@
                             </p>
                         @enderror
                     </div>
-                    <label class="label" for="address">Alamat Lengkap</label>
-                    <div class="relative">
-                        <textarea id="address" name="address" rows="3" class="input h-auto py-3" 
-                            placeholder="Masukkan alamat lengkap">{{ old('address') }}</textarea>
+                    <div class="md:col-span-2">
+                        <label class="label" for="address">Alamat Lengkap</label>
+                        <div class="relative">
+                            <textarea id="address" name="address" rows="3" class="input h-auto py-3"
+                                placeholder="Masukkan alamat lengkap">{{ old('address') }}</textarea>
+                        </div>
+                        @error('address')
+                            <p class="mt-1 text-xs text-red-500">
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
-                    @error('address')
-                        <p class="mt-1 text-xs text-red-500">
-                            {{ $message }}
-                        </p>
-                    @enderror
             </div>
-            
+
 
             <button type="submit"
                 class="w-full rounded-lg bg-[#B80049] mt-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#970039]">
@@ -288,10 +292,7 @@
             </button>
             </form>
 
-            <p class="mt-4 text-center text-xs text-gray-500">
-                Sudah memiliki akun?
-                <a href="/login" class="font-semibold text-green-700">Masuk di sini</a>
-            </p>
+            
         </div>
     </div>
     </div>

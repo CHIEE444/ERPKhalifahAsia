@@ -1,8 +1,6 @@
 <x-layout title="Dashboard Agent">
     <div class="flex min-h-dvh bg-gray-50">
 
-        {{-- Sidebar --}}
-        <x-sidebaragent active="agent-management" />
 
         {{-- Main Content --}}
         <main class="flex-1 px-4 sm:px-6 lg:px-8 pt-20 pb-4 sm:pb-6 lg:pt-8 lg:pb-8 space-y-6 w-full min-w-0">
@@ -16,24 +14,26 @@
                         class="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border border-rose-100 shrink-0">
                     <div class="min-w-0">
                         <div class="flex items-center gap-2 flex-wrap">
-                            <h2 class="text-lg sm:text-xl font-bold text-gray-900 truncate">Razif Jelek</h2>
-                            <span class="text-xs font-medium text-green-700 bg-green-100 px-2.5 py-0.5 rounded-full shrink-0">
-                                Active
-                            </span>
+                            <h2 class="text-lg sm:text-xl font-bold text-gray-900 truncate">{{ $user->name }}</h2>
+
                         </div>
-                        <p class="text-sm text-gray-400 mt-1">ID: KHA-2023-0102</p>
+                        <p class="text-sm text-gray-400 mt-1">Referral Code : {{ $user->referral_code }}</p>
+
                     </div>
                 </div>
 
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                    <button type="button"
-                        class="bg-rose-700 hover:bg-rose-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition w-full sm:w-auto">
-                        Edit Profile
+                    <button type="button" id="shareButton" data-referral-code="{{ $user->referral_code }}"
+                        class="bg-blue-700 hover:bg-blue-800 flex items-center gap-1 text-white text-sm font-medium px-3 py-2 rounded-lg transition w-full sm:w-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-4">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+                        </svg>
+
+                        Share
                     </button>
-                    <button type="button"
-                        class="border border-green-600 text-green-700 hover:bg-green-50 text-sm font-medium px-4 py-2 rounded-lg transition w-full sm:w-auto">
-                        Contact Agent
-                    </button>
+
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
                         <circle cx="17" cy="8" r="2.5" />
                         <path d="M15.5 14.6c2.6.3 4.5 2.6 4.5 5.4" />
                     </svg>
-                    <p class="text-2xl sm:text-3xl font-bold text-gray-900">45</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900">{{ $stats['total'] }}</p>
                     <p class="text-xs font-medium text-gray-400 tracking-wide mt-1">TOTAL JAMAAH</p>
                 </div>
 
@@ -63,8 +63,8 @@
                         <path d="M10 6h4" />
                         <path d="M11 18h2" />
                     </svg>
-                    <p class="text-2xl sm:text-3xl font-bold text-gray-900">38</p>
-                    <p class="text-xs font-medium text-gray-400 tracking-wide mt-1">TOTAL BOOKINGS</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900">{{ $stats['aktif'] }}</p>
+                    <p class="text-xs font-medium text-gray-400 tracking-wide mt-1">Jamaah Aktif</p>
                 </div>
 
                 {{-- Success Rate --}}
@@ -75,7 +75,7 @@
                         <path d="M3 17l6-6 4 4 8-8" />
                         <path d="M15 7h6v6" />
                     </svg>
-                    <p class="text-2xl sm:text-3xl font-bold text-gray-900">92%</p>
+                    <p class="text-2xl sm:text-3xl font-bold text-gray-900">{{ $stats['rate'] }}%</p>
                     <p class="text-xs font-medium text-gray-400 tracking-wide mt-1">SUCCESS RATE</p>
                 </div>
 
@@ -91,7 +91,7 @@
                             </svg>
                             <div class="min-w-0">
                                 <p class="text-gray-400 text-xs">Email</p>
-                                <p class="text-gray-700 break-words">siti.rahma@khalifahasia.com</p>
+                                <p class="text-gray-700 break-words">{{ $user->email }}</p>
                             </div>
                         </li>
                         <li class="flex items-start gap-3">
@@ -102,7 +102,7 @@
                             </svg>
                             <div class="min-w-0">
                                 <p class="text-gray-400 text-xs">Phone</p>
-                                <p class="text-gray-700">+62 812-3456-7890</p>
+                                <p class="text-gray-700">{{ $user->phone }}</p>
                             </div>
                         </li>
                         <li class="flex items-start gap-3">
@@ -113,20 +113,10 @@
                             </svg>
                             <div class="min-w-0">
                                 <p class="text-gray-400 text-xs">Location</p>
-                                <p class="text-gray-700">Jakarta Pusat</p>
+                                <p class="text-gray-700">{{ $user->province }}</p>
                             </div>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <svg class="w-4 h-4 text-gray-400 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor" stroke-width="1.8">
-                                <rect x="3" y="4" width="18" height="18" rx="2" />
-                                <path d="M16 2v4M8 2v4M3 10h18" />
-                            </svg>
-                            <div class="min-w-0">
-                                <p class="text-gray-400 text-xs">Join Date</p>
-                                <p class="text-gray-700">January 15, 2023</p>
-                            </div>
-                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -135,7 +125,8 @@
             <div class="bg-white rounded-2xl border border-rose-100 overflow-hidden">
                 <div class="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-gray-100 gap-2">
                     <h3 class="text-base font-bold text-gray-900">History of Jamaah</h3>
-                    <a href="#" class="text-sm font-medium text-rose-700 hover:text-rose-800 shrink-0">View All &rarr;</a>
+                    <a href="#" class="text-sm font-medium text-rose-700 hover:text-rose-800 shrink-0">View All
+                        &rarr;</a>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -145,53 +136,41 @@
                                 <th class="px-4 sm:px-6 py-3 font-medium whitespace-nowrap">Jamaah Name</th>
                                 <th class="px-4 sm:px-6 py-3 font-medium whitespace-nowrap">Package Type</th>
                                 <th class="px-4 sm:px-6 py-3 font-medium whitespace-nowrap">Departure Date</th>
-                                <th class="px-4 sm:px-6 py-3 font-medium text-right whitespace-nowrap">Payment Status</th>
+                                <th class="px-4 sm:px-6 py-3 font-medium text-right whitespace-nowrap">Status</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
-                            <tr class="odd:bg-white even:bg-gray-50/50">
-                                <td class="px-4 sm:px-6 py-4 text-gray-700 whitespace-nowrap">Ahmad Zaki</td>
-                                <td class="px-4 sm:px-6 py-4 text-gray-500 whitespace-nowrap">Umrah Premium</td>
-                                <td class="px-4 sm:px-6 py-4 text-gray-500 whitespace-nowrap">12 Oct 2024</td>
-                                <td class="px-4 sm:px-6 py-4 text-right">
-                                    <span
-                                        class="inline-block text-xs font-medium px-3 py-1 rounded-full bg-green-100 text-green-700">Paid</span>
-                                </td>
-                            </tr>
-                            <tr class="odd:bg-white even:bg-gray-50/50">
-                                <td class="px-4 sm:px-6 py-4 text-gray-700 whitespace-nowrap">Fatima Zahra</td>
-                                <td class="px-4 sm:px-6 py-4 text-gray-500 whitespace-nowrap">Umrah Reguler</td>
-                                <td class="px-4 sm:px-6 py-4 text-gray-500 whitespace-nowrap">25 Nov 2024</td>
-                                <td class="px-4 sm:px-6 py-4 text-right">
-                                    <span
-                                        class="inline-block text-xs font-medium px-3 py-1 rounded-full bg-amber-100 text-amber-700">Partial</span>
-                                </td>
-                            </tr>
-                            <tr class="odd:bg-white even:bg-gray-50/50">
-                                <td class="px-4 sm:px-6 py-4 text-gray-700 whitespace-nowrap">Budi Santoso</td>
-                                <td class="px-4 sm:px-6 py-4 text-gray-500 whitespace-nowrap">Hajj Furoda</td>
-                                <td class="px-4 sm:px-6 py-4 text-gray-500 whitespace-nowrap">15 Jun 2025</td>
-                                <td class="px-4 sm:px-6 py-4 text-right">
-                                    <span
-                                        class="inline-block text-xs font-medium px-3 py-1 rounded-full bg-gray-100 text-gray-500">Pending</span>
-                                </td>
-                            </tr>
-                            <tr class="odd:bg-white even:bg-gray-50/50">
-                                <td class="px-4 sm:px-6 py-4 text-gray-700 whitespace-nowrap">Siti Aminah</td>
-                                <td class="px-4 sm:px-6 py-4 text-gray-500 whitespace-nowrap">Umrah Plus Turki</td>
-                                <td class="px-4 sm:px-6 py-4 text-gray-500 whitespace-nowrap">05 Dec 2024</td>
-                                <td class="px-4 sm:px-6 py-4 text-right">
-                                    <span
-                                        class="inline-block text-xs font-medium px-3 py-1 rounded-full bg-green-100 text-green-700">Paid</span>
-                                </td>
-                            </tr>
+                            @php
+                                $statusColor = [
+                                    'completed' => 'bg-green-50 text-green-600',
+                                    'in_progress' => 'bg-amber-50 text-amber-600',
+                                    'cancelled' => 'bg-gray-100 text-gray-500',
+                                    'active' => 'bg-blue-50 text-blue-600',
+                                ];
+                            @endphp
+                            @foreach ($clients as $client)
+                                <tr class="odd:bg-white even:bg-gray-50/50">
+                                    <td class="px-4 sm:px-6 py-4 text-gray-700 whitespace-nowrap">{{ $client->name }}
+                                    </td>
+                                    <td class="px-4 sm:px-6 py-4 text-gray-500 whitespace-nowrap">
+                                        {{ $client->package }}</td>
+                                    <td class="px-4 sm:px-6 py-4 text-gray-500 whitespace-nowrap">{{ $client->date }}
+                                    </td>
+                                    <td class="px-4 sm:px-6 py-4 text-right">
+                                        <span
+                                            class="inline-block text-xs font-medium px-3 py-1 rounded-full {{ $statusColor[$client->status] }}">{{ $client->status }}</span>
+                                    </td>
+                                </tr>
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
             </div>
 
             {{-- Footer --}}
-            <footer class="flex flex-col sm:flex-row items-center sm:justify-between gap-3 text-xs text-gray-400 pt-2 text-center sm:text-left">
+            <footer
+                class="flex flex-col sm:flex-row items-center sm:justify-between gap-3 text-xs text-gray-400 pt-2 text-center sm:text-left">
                 <p>&copy; 2024 Khalifah Asia Tour &amp; Travel. All rights reserved.</p>
                 <div class="flex items-center gap-4 sm:gap-6 flex-wrap justify-center">
                     <a href="#" class="hover:text-gray-600">Privacy Policy</a>
@@ -202,4 +181,28 @@
 
         </main>
     </div>
+
+    <script>
+        const shareButton = document.getElementById('shareButton');
+
+        shareButton.addEventListener('click', async () => {
+            const shareData = {
+                title: document.title,
+                text: 'Lihat halaman ini',
+                url: window.location.href + '?' + shareButton.dataset.referralCode,
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (error) {
+                    console.log('Share dibatalkan');
+                }
+            } else {
+                await navigator.clipboard.writeText(window.location.href);
+
+                alert('Link berhasil disalin!');
+            }
+        });
+    </script>
 </x-layout>

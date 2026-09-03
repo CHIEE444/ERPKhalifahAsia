@@ -21,7 +21,7 @@ class ClientPolicy
      */
     public function view(User $user, Client $client): bool
     {
-        return $user->role === 'admin' || $user->id === $client->user_id;
+        return $user->role === 'admin' || $user->referral_code === $client->referral_code;
     }
 
     /**
@@ -37,7 +37,7 @@ class ClientPolicy
      */
     public function update(User $user, Client $client): bool
     {
-        return $user->role === 'admin' || $user->id === $client->user_id;
+        return $user->role === 'admin' || $user->referral_code === $client->referral_code;
     }
 
     /**
@@ -45,7 +45,7 @@ class ClientPolicy
      */
     public function delete(User $user, Client $client): bool
     {
-        return $user->role === 'admin' || $user->id === $client->user_id;
+        return $user->role === 'admin' || $user->referral_code === $client->referral_code;
     }
 
     /**

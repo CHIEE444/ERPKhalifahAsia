@@ -12,12 +12,12 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny');
-        $clients = Client::latest()->get();
-        return response()->json([
-            'success' => true,
-            'data' => $clients
-        ]);
+        $clients = Client::latest('updated_at')
+            ->when(auth()->user()->role !== 'admin', function ($query) {
+                $query->where('referral_code', auth()->user()->referral_code);
+            })
+            ->get();
+        return view('bookings.index', compact('clients'));
     }
 
     /**
@@ -44,8 +44,8 @@ class ClientController extends Controller
             'date' => 'required|date',
             'room_type' => 'required|string|max:100',
             'note' => 'nullable|string|max:250',
-            'status' => 'required|in:active,in_progress,completed,cancelled',
         ]);
+        $validated['status'] = 'in_progress'; // Set default status to in_progress
         $client = Client::create($validated);
         return response()->json([
             'success' => true,
@@ -101,16 +101,31 @@ class ClientController extends Controller
         ]);
     }
 
+    public function updateStatus(Request $request, Client $client)
+    {
+        $this->authorize('update', $client);
+        $validated = $request->validate([
+            'status' => 'required|in:active,in_progress,completed,cancelled',
+        ]);
+        try{
+            $client->update($validated);
+            return back()->with('success', 'Client status updated successfully.');
+        }catch(\Exception $e){
+            return back()->with('error', 'Failed to update client status');
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Client $client)
     {
         $this->authorize('delete', $client);
-        $client->delete();
-        return response()->json([
-            'success' => true,
-            'message' => 'Client deleted successfully'
-        ]);
+        try{
+            $client->delete();
+            return redirect()->back()->with('success', 'Client deleted successfully.');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', 'Failed to delete client');
+        }
     }
 }
